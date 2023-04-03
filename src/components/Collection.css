@@ -1,0 +1,261 @@
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Kanit:wght@200;500&family=Oleo+Script+Swash+Caps&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.collectionCard {
+  position: absolute;
+  width: 65vw;
+  height: 70vh;
+  top: 15%;
+  left: 20%;
+  background: linear-gradient(
+    90deg,
+    rgba(59, 38, 103, 1) 15%,
+    rgba(188, 120, 236, 1) 39%,
+    rgba(59, 38, 103, 1) 61%
+  );
+
+  border-radius: 50px;
+  border: thick double #d58cf75d;
+  box-shadow: 0 0 30px #bb64e37e;
+}
+
+.collectionCard .foxCardImage img {
+  position: absolute;
+  bottom: 0;
+  height: 90%;
+}
+
+.miniCarousel {
+  width: 21%;
+  height: 100%;
+  margin: 0 2%;
+  overflow: hidden;
+}
+
+.miniCarousel .miniCard {
+  width: 80%;
+  height: 11rem;
+  background: #bb64e33f;
+  border: thick double #d6a0ff6c;
+  /* box-shadow: inset 0 0 7px #e9ccf7c7; */
+  border-radius: 50px;
+  margin: 5% 5%;
+  overflow: hidden;
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+/* .miniCarousel .miniCard img {
+  filter: drop-shadow(5px 5px 0 rgb(140, 0, 255))
+    drop-shadow(5px 5px 0 rgb(225, 0, 255));
+} */
+
+.miniCarousel .miniCard:hover {
+  background-color: #d6a0ff6c;
+  /* box-shadow: inset 0 0 12px #d58cf7; */
+  transition: all 0.1s ease-in-out;
+}
+
+/* .miniCarousel .active img {
+  filter: blur(0);
+} */
+
+.miniCarousel .miniCard:hover img {
+  filter: grayscale(0%);
+  transition: all 0.1s ease-in-out;
+}
+
+.miniCarousel .active {
+  background-color: #d6a0ff6c;
+  box-shadow: inset 0 0 20px #d383f8, 0 0 12px #da9bf7;
+  transition: all 0.3s ease-in-out;
+  /* transform: translateX(100px);
+  transition: transform 0.1s 0.5s ease-in-out; */
+  /* display: none;
+  transition: display 0.5s ease-in-out; */
+}
+
+.descriptionBlock {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  height: 80%;
+  /* background: #bb64e33d;
+  border: thick double #bb64e37e;
+  box-shadow: inset 0 0 5px #bb64e3c0;
+  border-radius: 30px; */
+  margin: 2%;
+  padding: 2rem 1rem;
+}
+
+.cardTitle {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.cardTitle h1 {
+  color: #fff;
+  font-family: "Kanit", sans-serif;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+}
+
+.cardTitle span {
+  color: #d6a0ff;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+}
+
+.dataBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.dataBlock p {
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.dataBlock .foxDescr {
+  margin: 0.5rem 0;
+  padding: 0 1rem 1.5rem;
+  border-bottom: thick double #d6a0ff6c;
+  box-shadow: 0px 20px 20px -20px #d6a0ff6c;
+}
+
+.dataBlock .paramsBlock {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.dataBlock .paramsBlock .params {
+  width: 49%;
+}
+
+.dataBlock .params p {
+  /* border-top: 1px solid #d6a0ff6b; */
+  padding: 0.3rem 1rem;
+  margin: 0.5rem 0;
+  border: thick double #d6a0ff6c;
+  border-radius: 50px;
+  box-shadow: inset 0 0 10px #d6a0ff6c;
+}
+
+.dataBlock .params p span {
+  /* background: #e1a1ff; */
+  color: #e1a1ff;
+  float: right;
+}
+
+.dataBlock .items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: thick double #d6a0ff6c;
+  border-radius: 50px;
+  box-shadow: inset 0 0 10px #d6a0ff6c;
+  /* border-bottom: 1px solid #d6a0ff; */
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.dataBlock .items p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dataBlock .items p span {
+  font-size: 1.5rem;
+  color: #e1a1ff;
+}
+
+.dataBlock .icons span img {
+  margin-right: 0.5rem;
+}
+
+.dataBlock .progressBlock {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.dataBlock .progressBlock .progressItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+}
+
+.dataBlock .progressBlock .progressItem img {
+  max-height: 100%;
+}
+
+.dataBlock .progressBlock .progressItem .progressBar {
+  width: 90%;
+  height: 30%;
+  border: thick double #d6a0ff6c;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px #d6a0ff6c;
+  margin-left: 1rem;
+}
+
+.dataBlock .progressBlock .progressItem .progressBar .progressFill {
+  width: 0%;
+  height: 50%;
+  background-color: #d6a0ffd7;
+  border: 2px solid #d6a0ff6c;
+  border-radius: 10px;
+}
+
+.slick-prev::before {
+  font-size: 30px;
+  color: #e1a1ff;
+  z-index: 10;
+}
+
+.slick-next::before {
+  font-size: 30px;
+  color: #e1a1ff;
+  z-index: 10;
+}
+
+.slick-list {
+  height: 100% !important;
+}
+
+/* .slick-active {
+  position: absolute;
+  bottom: 0;
+  scale: 5;
+  border: none;
+  box-shadow: none;
+  transition: all 2s ease-in-out;
+} */
+
+/* .miniCard {
+  display: block;
+} */
+
+/* .active {
+  display: none !important;
+} */
