@@ -13,6 +13,7 @@ import { cardFoxData } from "../foxCardData";
 import "./Collection.css";
 
 export const Collection = () => {
+  gsap.registerPlugin(MorphSVGPlugin);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [prevCardIndex, setPrevCardIndex] = useState(0);
 
@@ -35,7 +36,6 @@ export const Collection = () => {
   const foxImageRef = useRef(null);
 
   useEffect(() => {
-    gsap.registerPlugin(MorphSVGPlugin);
     gsap.to(foxImageRef.current, {
       duration: 0.5,
       morphSVG: cardFoxData[activeCardIndex].path,
