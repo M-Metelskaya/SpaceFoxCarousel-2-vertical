@@ -206,10 +206,6 @@ p {
   margin-bottom: 0.3rem;
 }
 
-.dataBlock .progressBlock .progressItem img {
-  max-height: 100%;
-}
-
 .dataBlock .progressBlock .progressItem .progressBar {
   width: 90%;
   height: 30%;
@@ -242,20 +238,3 @@ p {
 .slick-list {
   height: 100% !important;
 }
-
-/* .slick-active {
-  position: absolute;
-  bottom: 0;
-  scale: 5;
-  border: none;
-  box-shadow: none;
-  transition: all 2s ease-in-out;
-} */
-
-/* .miniCard {
-  display: block;
-} */
-
-/* .active {
-  display: none !important;
-} */

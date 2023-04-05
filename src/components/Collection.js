@@ -1,161 +1,23 @@
 import { React, useState, useEffect, useRef } from "react";
+import { gsap, MorphSVGPlugin } from "gsap-trial/all";
 import Slider from "react-slick";
-import {
-  motion,
-  useAnimationControls,
-  AnimatePresence,
-  useAnimation,
-} from "framer-motion";
+import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 import {
   BsRocketFill,
   BsFillStarFill,
   BsFillLightningFill,
 } from "react-icons/bs";
+import { MininCard } from "./MiniCard";
+import { cardFoxData } from "../foxCardData";
 
 import "./Collection.css";
 
 export const Collection = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [prevCardIndex, setPrevCardIndex] = useState(0);
-  // const cardImages = [
-  //   "./fox_card1.png",
-  //   "./fox_card2.png",
-  //   "./fox_card3.png",
-  //   "./fox_card4.png",
-  // ];
 
-  const cardFoxes = [
-    {
-      id: 0,
-      name: "Space Fox",
-      description:
-        "Surgical specialist in the field of medicine, who is distinguished by high precision in his work.",
-      img: "./fox_card1.png",
-      gender: "Male",
-      color: "White",
-      age: 5,
-      location: "Earth",
-      profession: "Healer",
-      specialization: "Surgeon",
-      population: 1000,
-      flights: 21,
-      stars: 583,
-      energy: "1237",
-      fav_genre: "Resourcefulness",
-      progress: {
-        param1: 20,
-        param2: 80,
-        param3: 10,
-      },
-    },
-
-    {
-      id: 1,
-      name: "Space Fox",
-      description:
-        "She has a degree in biochemistry, is distinguished by high intelligence and prudence.",
-      img: "./fox_card2.png",
-      gender: "Female",
-      color: "Red",
-      age: 7,
-      location: "Earth",
-      profession: "Scientist",
-      specialization: "Biochemist",
-      population: 300,
-      flights: 9,
-      stars: 480,
-      energy: 1900,
-      fav_genre: "Discipline",
-      progress: {
-        param1: 50,
-        param2: 20,
-        param3: 20,
-      },
-    },
-    {
-      id: 2,
-      name: "Space Fox",
-      description:
-        "Has a fast response and excellent health Successfully completed a pilot training course.",
-      img: "./fox_card4.png",
-      gender: "Male",
-      color: "Red",
-      age: 8,
-      location: "Earth",
-      profession: "Military",
-      specialization: "Pilot",
-      population: 1500,
-      flights: 15,
-      stars: 461,
-      energy: 2007,
-      fav_genre: "Tactics",
-      progress: {
-        param1: 90,
-        param2: 50,
-        param3: 90,
-      },
-    },
-    {
-      id: 3,
-      name: "Space Fox",
-      description:
-        "Successfully completed a training course for a young fighter and was awarded a medal for courage.",
-      img: "./fox_card3.png",
-      gender: "Female",
-      color: "White",
-      age: 4,
-      location: "Earth",
-      profession: "Military",
-      specialization: "Infantryman",
-      population: 550,
-      flights: 14,
-      stars: 349,
-      energy: 2500,
-      fav_genre: "Courage",
-      progress: {
-        param1: 30,
-        param2: 10,
-        param3: 70,
-      },
-    },
-  ];
-  const NextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          position: "static",
-          transform: "rotate(90deg",
-          margin: "0 40%",
-          width: "30px",
-          height: "30px",
-        }}
-        onClick={onClick}
-      ></div>
-    );
-  };
-
-  const PrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          position: "static",
-          transform: "rotate(90deg)",
-          margin: "0 40%",
-          width: "30px",
-          height: "30px",
-        }}
-        onClick={onClick}
-      ></div>
-    );
-  };
   let settings = {
-    // autoplay: true,
+    autoplay: true,
     focusOnSelect: true,
     infinite: true,
     slidesToShow: 3,
@@ -165,9 +27,6 @@ export const Collection = () => {
     // centerMode: true,
     // centerPadding: "0%",
     arrows: false,
-    // nextArrow: <NextArrow />,
-    // prevArrow: <PrevArrow />,
-
     beforeChange: (current, next) => {
       setActiveCardIndex(next);
       setPrevCardIndex(current);
@@ -175,20 +34,13 @@ export const Collection = () => {
   };
   const foxImageRef = useRef(null);
 
-  // useEffect(() => {
-  //   new hoverEffect({
-  //     parent: foxImageRef.current,
-  //     intensity: 0.3,
-  //     image1: "/fox_card1.png",
-  //     image2: "/fox_card2.png",
-  //     // image1: `${cardFoxes[prevCardIndex].img}`,
-  //     // image2: `${cardFoxes[activeCardIndex].img}`,
-  //     displacementImage: "smoke_temp.png",
-  //     // hover: false,
-  //     // next: activeCardIndex,
-  //     // previous: prevCardIndex,
-  //   });
-  // });
+  useEffect(() => {
+    gsap.registerPlugin(MorphSVGPlugin);
+    gsap.to(foxImageRef.current, {
+      duration: 0.5,
+      morphSVG: cardFoxData[activeCardIndex].path,
+    });
+  }, [activeCardIndex]);
 
   const cardImagesControl = useAnimationControls();
   const cardTitleControl = useAnimationControls();
@@ -250,7 +102,7 @@ export const Collection = () => {
         }}
       >
         <Slider {...settings} className="miniCarousel">
-          {cardFoxes.map((cardFox, index) =>
+          {cardFoxData.map((cardFox, index) =>
             index === activeCardIndex ? (
               <MininCard img={cardFox.img} key={index} isActive={true} />
             ) : (
@@ -262,39 +114,85 @@ export const Collection = () => {
         <motion.div
           ref={foxImageRef}
           className="foxCardImage"
-          style={{ width: "40%", height: "100%" }}
+          style={{
+            width: "40%",
+            height: "100%",
+          }}
         >
-          <AnimatePresence>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100%"
+            height="100%"
+            viewBox="0 -27 709 1024"
+            version="1.1"
+          >
+            <defs>
+              <pattern
+                id="fill"
+                patternUnits="userSpaceOnUse"
+                viewBox="0 0 700 1000"
+                x="0"
+                y="0"
+                width="100%"
+                height="100%"
+              >
+                <AnimatePresence>
+                  <motion.image
+                    key={cardFoxData[activeCardIndex].img}
+                    src={cardFoxData[activeCardIndex].img}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    href={cardFoxData[activeCardIndex].img}
+                    width="709px"
+                    height="1024px"
+                  />
+                </AnimatePresence>
+              </pattern>
+            </defs>
+
+            <path
+              ref={foxImageRef}
+              key={`path${cardFoxData[activeCardIndex].id}`}
+              id={`fox_card${cardFoxData.id}`}
+              fill="url(#fill)"
+              d={cardFoxData[prevCardIndex].path}
+              stroke="none"
+              fillRule="evenodd"
+            />
+          </svg>
+          {/* <AnimatePresence>
             <motion.img
-              key={cardFoxes[activeCardIndex].img}
-              src={cardFoxes[activeCardIndex].img}
-              initial={{ opacity: 0, filter: "brightness(0px)" }}
-              animate={{ opacity: 1, filter: "brightness(0px)" }}
-              exit={{ opacity: 0, filter: "brightness(2)" }}
+              key={cardFoxData[activeCardIndex].img}
+              src={cardFoxData[activeCardIndex].img}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
             />
-          </AnimatePresence>
+          </AnimatePresence> */}
         </motion.div>
 
         <div className="descriptionBlock">
           <motion.div className="cardTitle">
             <motion.h1
-              key={cardFoxes[activeCardIndex].id}
+              key={cardFoxData[activeCardIndex].id}
               initial={{ scaleY: 0, opacity: 0 }}
               animate={{ scaleY: 1, opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              {cardFoxes[activeCardIndex].name} #{activeCardIndex + 1}
+              {cardFoxData[activeCardIndex].name} #{activeCardIndex + 1}
             </motion.h1>
 
             <motion.span
-              key={`profession${cardFoxes[activeCardIndex].id}`}
+              key={`profession${cardFoxData[activeCardIndex].id}`}
               initial={{ filter: "blur(5px)" }}
               animate={{ filter: "blur(0px)" }}
               transition={{ duration: 0.3 }}
             >
-              {cardFoxes[activeCardIndex].profession},{" "}
-              {cardFoxes[activeCardIndex].specialization}
+              {cardFoxData[activeCardIndex].profession},{" "}
+              {cardFoxData[activeCardIndex].specialization}
             </motion.span>
           </motion.div>
 
@@ -304,21 +202,21 @@ export const Collection = () => {
                 <motion.p>
                   Gender
                   <motion.span
-                    key={`param1${cardFoxes[activeCardIndex].id}`}
+                    key={`param1${cardFoxData[activeCardIndex].id}`}
                     initial={{ scaleY: 0 }}
                     animate={paramsControl}
                   >
-                    {cardFoxes[activeCardIndex].gender}
+                    {cardFoxData[activeCardIndex].gender}
                   </motion.span>
                 </motion.p>
                 <motion.p>
                   Color
                   <motion.span
-                    key={`param2${cardFoxes[activeCardIndex].id}`}
+                    key={`param2${cardFoxData[activeCardIndex].id}`}
                     initial={{ scaleY: 0 }}
                     animate={paramsControl}
                   >
-                    {cardFoxes[activeCardIndex].color}
+                    {cardFoxData[activeCardIndex].color}
                   </motion.span>
                 </motion.p>
               </div>
@@ -327,21 +225,21 @@ export const Collection = () => {
                 <motion.p>
                   Age
                   <motion.span
-                    key={`param3${cardFoxes[activeCardIndex].id}`}
+                    key={`param3${cardFoxData[activeCardIndex].id}`}
                     initial={{ scaleY: 0 }}
                     animate={paramsControl}
                   >
-                    {cardFoxes[activeCardIndex].age}
+                    {cardFoxData[activeCardIndex].age}
                   </motion.span>
                 </motion.p>
                 <motion.p>
                   Location
                   <motion.span
-                    key={`param4${cardFoxes[activeCardIndex].id}`}
+                    key={`param4${cardFoxData[activeCardIndex].id}`}
                     initial={{ scaleY: 0 }}
                     animate={paramsControl}
                   >
-                    {cardFoxes[activeCardIndex].location}
+                    {cardFoxData[activeCardIndex].location}
                   </motion.span>
                 </motion.p>
               </div>
@@ -355,17 +253,17 @@ export const Collection = () => {
                 />
                 <div className="progressBar">
                   <motion.div
-                    key={cardFoxes[activeCardIndex].progress.param1}
+                    key={cardFoxData[activeCardIndex].progress.param1}
                     initial={{
-                      width: `${cardFoxes[prevCardIndex].progress.param1}%`,
+                      width: `${cardFoxData[prevCardIndex].progress.param1}%`,
                     }}
                     animate={{
-                      width: `${cardFoxes[activeCardIndex].progress.param1}%`,
+                      width: `${cardFoxData[activeCardIndex].progress.param1}%`,
                     }}
                     transition={{ duration: 1 }}
                     className="progressFill"
                     style={{
-                      width: `${cardFoxes[activeCardIndex].progress.param1}%`,
+                      width: `${cardFoxData[activeCardIndex].progress.param1}%`,
                     }}
                   ></motion.div>
                 </div>
@@ -378,17 +276,17 @@ export const Collection = () => {
                 />
                 <div className="progressBar">
                   <motion.div
-                    key={cardFoxes[activeCardIndex].progress.param2}
+                    key={cardFoxData[activeCardIndex].progress.param2}
                     initial={{
-                      width: `${cardFoxes[prevCardIndex].progress.param2}%`,
+                      width: `${cardFoxData[prevCardIndex].progress.param2}%`,
                     }}
                     animate={{
-                      width: `${cardFoxes[activeCardIndex].progress.param2}%`,
+                      width: `${cardFoxData[activeCardIndex].progress.param2}%`,
                     }}
                     transition={{ duration: 1 }}
                     className="progressFill"
                     style={{
-                      width: `${cardFoxes[activeCardIndex].progress.param2}%`,
+                      width: `${cardFoxData[activeCardIndex].progress.param2}%`,
                     }}
                   ></motion.div>
                 </div>
@@ -401,17 +299,17 @@ export const Collection = () => {
                 />
                 <div className="progressBar">
                   <motion.div
-                    key={cardFoxes[activeCardIndex].progress.param3}
+                    key={cardFoxData[activeCardIndex].progress.param3}
                     initial={{
-                      width: `${cardFoxes[prevCardIndex].progress.param3}%`,
+                      width: `${cardFoxData[prevCardIndex].progress.param3}%`,
                     }}
                     animate={{
-                      width: `${cardFoxes[activeCardIndex].progress.param3}%`,
+                      width: `${cardFoxData[activeCardIndex].progress.param3}%`,
                     }}
                     transition={{ duration: 1 }}
                     className="progressFill"
                     style={{
-                      width: `${cardFoxes[activeCardIndex].progress.param3}%`,
+                      width: `${cardFoxData[activeCardIndex].progress.param3}%`,
                     }}
                   ></motion.div>
                 </div>
@@ -422,51 +320,51 @@ export const Collection = () => {
               <p>
                 Population
                 <motion.span
-                  key={`population${cardFoxes[activeCardIndex].id}`}
+                  key={`population${cardFoxData[activeCardIndex].id}`}
                   initial={{ rotateX: "0deg" }}
                   animate={rotateXControl}
                 >
-                  {cardFoxes[activeCardIndex].population}
+                  {cardFoxData[activeCardIndex].population}
                 </motion.span>
               </p>
               <p>
                 Flights
                 <motion.span
-                  key={`flights${cardFoxes[activeCardIndex].id}`}
+                  key={`flights${cardFoxData[activeCardIndex].id}`}
                   initial={{ rotateX: "0deg" }}
                   animate={rotateXControl}
                 >
-                  {cardFoxes[activeCardIndex].flights}
+                  {cardFoxData[activeCardIndex].flights}
                 </motion.span>
               </p>
               <p>
                 Stars
                 <motion.span
-                  key={`stars${cardFoxes[activeCardIndex].id}`}
+                  key={`stars${cardFoxData[activeCardIndex].id}`}
                   initial={{ rotateX: "0deg" }}
                   animate={rotateXControl}
                 >
-                  {cardFoxes[activeCardIndex].stars}
+                  {cardFoxData[activeCardIndex].stars}
                 </motion.span>
               </p>
               <p>
                 Energy
                 <motion.span
-                  key={`energy${cardFoxes[activeCardIndex].id}`}
+                  key={`energy${cardFoxData[activeCardIndex].id}`}
                   initial={{ rotateX: "0deg" }}
                   animate={rotateXControl}
                 >
-                  {cardFoxes[activeCardIndex].energy}
+                  {cardFoxData[activeCardIndex].energy}
                 </motion.span>
               </p>
             </div>
             <div className="foxDescr">
               <motion.p
-                key={`description${cardFoxes[activeCardIndex].id}`}
+                key={`description${cardFoxData[activeCardIndex].id}`}
                 initial={{ opacity: 0, scale: 0.3, filter: "blur(20px)" }}
                 animate={descriptionControl}
               >
-                {cardFoxes[activeCardIndex].description}
+                {cardFoxData[activeCardIndex].description}
               </motion.p>
             </div>
             <div
@@ -486,7 +384,7 @@ export const Collection = () => {
                 Favorite Genre
               </p>
               <motion.span
-                key={`fav_gen${cardFoxes[activeCardIndex].id}`}
+                key={`fav_gen${cardFoxData[activeCardIndex].id}`}
                 initial={{ scaleY: 0 }}
                 animate={paramsControl}
                 style={{
@@ -495,25 +393,12 @@ export const Collection = () => {
                   textTransform: "uppercase",
                 }}
               >
-                {cardFoxes[activeCardIndex].fav_genre}
+                {cardFoxData[activeCardIndex].fav_genre}
               </motion.span>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-export const MininCard = ({ img, isActive }) => {
-  return (
-    <div className={isActive ? "miniCard active" : "miniCard"}>
-      <img
-        src={img}
-        style={{
-          width: "100% ",
-        }}
-      />
     </div>
   );
 };
